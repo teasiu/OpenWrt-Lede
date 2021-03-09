@@ -12,7 +12,6 @@
 sed -i 's/^#\(.*helloworld\)/\1/' feeds.conf.default
 rm -rf package/lean/luci-theme-argon && git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git package/lean/luci-theme-argon
 git clone https://github.com/teasiu/lede-other-apps.git package/lede-other-apps
-wget https://raw.githubusercontent.com/teasiu/OpenWrt-Newifi_D2/main/uhttpd -O package/network/services/uhttpd/files/uhttpd.config
 wget https://github.com/ButterAndButterfly/GithubHost/releases/download/v1/host.txt -O package/base-files/files/etc/githubhosts
 bash -c "cat >> package/network/services/dnsmasq/files/dnsmasq.conf" << EOF
 enable-tftp
@@ -22,6 +21,16 @@ dhcp-match=set:efi-x86_64,option:client-arch,7
 dhcp-boot=tag:efi-x86_64,uefi/snponly.efi
 dhcp-hostsfile=/etc/githubhosts
 EOF
+bash -c "cat >> package/network/services/uhttpd/files/uhttpd.config" << EOF2
+config uhttpd 'blog'
+option tcp_keepalive '1'
+list listen_http '0.0.0.0:8090'
+option redirect_https '0'
+option rfc1918_filter '0'
+list index_page 'index.php'
+list interpreter '.php=/usr/bin/php-cgi'
+option home '/www/blog'
+EOF2
 #sed -i 's@coolsnowwolf/packages@P3TERX/packages@' feeds.conf.default
 
 #sed -i '$a src-git passwall https://github.com/xiaorouji/openwrt-passwall' feeds.conf.default
