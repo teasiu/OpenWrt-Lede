@@ -20,6 +20,12 @@ sed -i "s/OpenWrt /teasiu build $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" packa
 # Modify default theme
 #sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
 
+# Moodify wifi name
+sed -i 's/OpenWrt/hg255d/g' package/kernel/mac80211/files/lib/wifi/mac80211.sh
+
+# Moodify wifi firewall
+sed -i '20,24s/REJECT/ACCEPT/g' package/network/config/firewall/files/firewall.config
+
 # Add kernel build user
 [ -z $(grep "CONFIG_KERNEL_BUILD_USER=" .config) ] &&
     echo 'CONFIG_KERNEL_BUILD_USER="teasiu"' >>.config ||
