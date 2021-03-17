@@ -13,7 +13,7 @@ sed -i 's/^#\(.*helloworld\)/\1/' feeds.conf.default
 #rm -rf package/lean/luci-theme-argon && git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git package/lean/luci-theme-argon
 #git clone https://github.com/teasiu/lede-other-apps.git package/lede-other-apps
 #git clone https://github.com/jerrykuku/luci-app-argon-config.git package/lede-other-apps/luci-app-argon-config
-#wget https://github.com/ButterAndButterfly/GithubHost/releases/download/v1/host.txt -O package/base-files/files/etc/githubhosts
+curl -fsSL https://github.com/ButterAndButterfly/GithubHost/releases/download/v1/host.txt >> package/base-files/files/etc/hosts
 
 #sed -i 's@coolsnowwolf/packages@P3TERX/packages@' feeds.conf.default
 
