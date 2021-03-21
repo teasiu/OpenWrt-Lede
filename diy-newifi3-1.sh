@@ -14,16 +14,9 @@ rm -rf package/lean/luci-theme-argon && git clone -b 18.06 https://github.com/je
 git clone https://github.com/teasiu/lede-other-apps.git package/lede-other-apps
 git clone https://github.com/jerrykuku/luci-app-argon-config.git package/lede-other-apps/luci-app-argon-config
 git clone https://github.com/xiaorouji/openwrt-passwall package/passwall
-wget https://github.com/ButterAndButterfly/GithubHost/releases/download/v1/host.txt -O package/base-files/files/etc/githubhosts
-bash -c "cat >> package/network/services/dnsmasq/files/dnsmasq.conf" << EOF
-enable-tftp
-tftp-root=/www/tftp
-dhcp-boot=undionly.kpxe
-dhcp-match=set:efi-x86_64,option:client-arch,7
-dhcp-boot=tag:efi-x86_64,uefi/snponly.efi
-dhcp-hostsfile=/etc/githubhosts
-EOF
-bash -c "cat >> package/network/services/uhttpd/files/uhttpd.config" << EOF2
+curl -fsSL https://github.com/ButterAndButterfly/GithubHost/releases/download/v1/host.txt >> package/base-files/files/etc/hosts
+curl -fsSL https://raw.githubusercontent.com/teasiu/openwrt-autoupdate/main/Customize/dhcp.conf > package/network/services/dnsmasq/files/dhcp.conf
+bash -c "cat >> package/network/services/uhttpd/files/uhttpd.config" << EOF
 config uhttpd 'blog'
 option tcp_keepalive '1'
 list listen_http '0.0.0.0:8090'
@@ -32,7 +25,7 @@ option rfc1918_filter '0'
 list index_page 'index.php'
 list interpreter '.php=/usr/bin/php-cgi'
 option home '/www/blog'
-EOF2
+EOF
 #sed -i 's@coolsnowwolf/packages@P3TERX/packages@' feeds.conf.default
 
 #sed -i '$a src-git passwall https://github.com/xiaorouji/openwrt-passwall' feeds.conf.default
