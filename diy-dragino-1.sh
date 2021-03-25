@@ -9,7 +9,7 @@
 #=============================================================
 
 # fw876/helloworld
-sed -i 's/^#\(.*helloworld\)/\1/' feeds.conf.default
+#sed -i 's/^#\(.*helloworld\)/\1/' feeds.conf.default
 rm -rf package/lean/luci-theme-argon && git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git package/lean/luci-theme-argon
 git clone https://github.com/teasiu/lede-other-apps.git package/lede-other-apps
 git clone https://github.com/jerrykuku/luci-app-argon-config.git package/lede-other-apps/luci-app-argon-config
